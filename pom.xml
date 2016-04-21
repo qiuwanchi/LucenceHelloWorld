@@ -11,21 +11,46 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   	<dependency>
 		<groupId>org.apache.lucene</groupId>
 		<artifactId>lucene-core</artifactId>
-		<version>5.5.0</version>
+		<version>5.3.1</version>
 	</dependency>
 
 	<dependency>
 		<groupId>org.apache.lucene</groupId>
 		<artifactId>lucene-queryparser</artifactId>
-		<version>5.5.0</version>
+		<version>5.3.1</version>
 	</dependency> 
 	
 	<dependency>
 		<groupId>org.apache.lucene</groupId>
 		<artifactId>lucene-analyzers-common</artifactId>
-		<version>5.5.0</version>
+		<version>5.3.1</version>
 	</dependency>
-
+	
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi</artifactId>
+		<version>3.14</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi-ooxml</artifactId>
+		<version>3.14</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>poi</groupId>
+		<artifactId>poi</artifactId>
+		<version>3.1-FINAL</version>
+	</dependency>
+	
+	
+	
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+	<version>4.12</version>
+	</dependency>
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>

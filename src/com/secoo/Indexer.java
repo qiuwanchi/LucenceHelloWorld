@@ -8,17 +8,27 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
+/**
+ * 索引文件
+ * @author qiuwanchi<br/>
+ * @date: 2016年4月18日 <br/>
+ */
 public class Indexer {
 
 	private IndexWriter writer;// 写索引对象
 
-	// 把索引写到indexDir目录中
+	/**
+	 * 初始化写索引对象
+	 * @param indexDir 索引写到indexDir目录中
+	 * @throws Exception
+	 */
 	public Indexer(String indexDir) throws Exception {
 		Directory dir = FSDirectory.open(Paths.get(indexDir));
 
@@ -29,14 +39,13 @@ public class Indexer {
 
 	/**
 	 * 关闭资源 <br/>
-	 * 
 	 * @author qiuwanchi<br/>
 	 * @date: 2016年4月12日 <br/>
 	 */
 	public void close() throws Exception{
 		writer.close();
 	}
-
+	
 	public int index(String dataDir) throws Exception{
 		File[] files = new File(dataDir).listFiles();
 
@@ -44,12 +53,10 @@ public class Indexer {
 			indexFile(file);
 		}
 		return writer.numDocs();
-
 	}
 
 	/**
 	 * 索引指定文件
-	 * 
 	 * @param file<br/>
 	 * @author qiuwanchi<br/>
 	 * @date: 2016年4月12日 <br/>
@@ -60,30 +67,45 @@ public class Indexer {
 		writer.addDocument(doc);
 	}
 
+	/**
+	 * 获取文档
+	 * @param file
+	 * @return
+	 * @throws Exception<br/>
+	 * @author qiuwanchi<br/>
+	 * @date: 2016年4月18日 <br/>
+	 */
 	private Document getDocument(File file) throws Exception{
 		Document doc = new Document();
+		
 		doc.add(new TextField("contents", new FileReader(file)));
 		doc.add(new TextField("fileName", file.getName(), Store.YES));
 		doc.add(new TextField("fullPath", file.getCanonicalPath(), Store.YES));
 		return doc;
 	}
 	
+	private static void addDoc(IndexWriter w, String title, String isbn) throws Exception {
+	  Document doc = new Document();
+	  doc.add(new TextField("title", title, Store.YES));
+	  doc.add(new StringField("isbn", isbn, Store.YES));
+	  w.addDocument(doc);
+	}
 	
 	public static void main(String[] args) {
 		String indexDir = "D:\\data\\Lucene\\index";
 		String dataDir = "D:\\data\\Lucene\\source";
-		Indexer index = null;
+		Indexer indexer = null;
 		int num = 0;
 		long start = System.currentTimeMillis();
 		try {
-			index = new Indexer(indexDir);
-			num = index.index(dataDir);
+			indexer = new Indexer(indexDir);
+			num = indexer.index(dataDir);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
-			if(index != null){
+			if(indexer != null){
 				try {
-					index.close();
+					indexer.close();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
