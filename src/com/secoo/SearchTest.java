@@ -81,7 +81,8 @@ public class SearchTest {
 			Document document = search.doc(doc.doc);
 			System.out.println(document.get("author"));
 		}
-		
+		Query q = new TermQuery(new Term("fieldName", "queryWord"));
+		search.search(q,10);
 		reader.close();
 	}
 	
