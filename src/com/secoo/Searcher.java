@@ -46,6 +46,7 @@ public class Searcher {
 		
 		for(ScoreDoc scoreDoc : hits.scoreDocs){
 			Document doc = search.doc(scoreDoc.doc);
+			
 			System.out.println(doc.get("fullPath"));
 		}
 		
